@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Создание ims-user-list</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 8px 16px 32px 16px;
+        font-family: Roboto, sans-serif;
+        color: #424242;
+        font-size: 1rem;
+        line-height: 1.5;
+        -moz-osx-font-smoothing: grayscale;
+        -webkit-font-smoothing: antialiased;
+      }
+    </style>
+  </head>
+
+  <body>
+    <script src="../dist/vendor/webcomponents-loader.js"></script>
+    <script nomodule src="../dist/vendor/fetch.js"></script>
+    <script nomodule src="../dist/vendor/babel-helpers.min.js"></script>
+    <script nomodule src="../dist/vendor/regenerator-runtime.min.js"></script>
+    <ims-user-list-generator></ims-user-list-generator>
+    <script nomodule src="../dist/ims-user-list-generator.es5.js"></script>
+    <script type="module" src="../dist/ims-user-list-generator.js"></script>
+  </body>
+</html>

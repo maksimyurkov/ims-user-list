@@ -1,0 +1,122 @@
+<% 
+function jsonParse(json) {
+    try {
+        return tools.read_object(json, 'json')
+    } catch (err) {
+        throw new Error('jsonParse: ' + err.message)
+    }
+}
+
+function jsonStringify(obj) {
+    try {
+        if (IsArray(obj)) return tools.array_to_text(obj, 'json')
+        return tools.object_to_text(obj, 'json')
+    } catch (err) {
+        throw new Error('jsonStringify: ' + err.message)
+    }
+}
+
+try {
+    var routes = { 'user': true, 'users': true }
+
+    if(Request.Header.HasProperty("Origin")) {
+        Request.AddRespHeader("Access-Control-Allow-Origin", Request.Header.Origin, false)
+    }  else {
+        Request.AddRespHeader("Access-Control-Allow-Origin", "*", false)
+    }   
+    Request.AddRespHeader("Access-Control-Allow-Credentials", true)
+    Request.AddRespHeader("Access-Control-Allow-Headers", "Content-Type, Accept")
+    Request.AddRespHeader("Access-Control-Allow-Methods", "POST")
+    Request.AddRespHeader("Content-Type", "application/json")
+    
+    function initSession() {
+        var signedIn = Request.Session.HasProperty('Env') && Request.Session.Env.GetOptProperty('curUserID', null) !== null
+        if (!signedIn) throw new Error('401')
+        Env = Request.Session.Env
+    }
+    
+    function user(parameters) {
+        try {
+            var userId = parameters.userId
+            var usedData = parameters.usedData
+            var userData = {}
+            var userTopElem = OpenDoc(UrlFromDocID(Int(userId))).TopElem
+            userData.id = '' + userTopElem.id
+            if (usedData.avatarURL) userData.avatarURL = '' + userTopElem.pict_url
+            if (usedData.displayName) userData.displayName = '' + userTopElem.lastname + ' ' + userTopElem.firstname + ' ' + userTopElem.middlename
+            if (usedData.nickname) userData.nickname = '' + userTopElem.personal_config.nick
+            if (usedData.position) userData.position = '' + userTopElem.position_name
+            if (usedData.subdivision) userData.subdivision = '' + userTopElem.position_parent_name
+            if (usedData.email) userData.email = '' + userTopElem.email
+            if (usedData.systemEmail) userData.systemEmail = '' + userTopElem.system_email
+            if (usedData.phone) userData.phone = '' + userTopElem.phone
+            if (usedData.mobilePhone) userData.mobilePhone = '' + userTopElem.mobile_phone
+            if (usedData.address) userData.address = '' + userTopElem.address
+            if (usedData.accountURL) userData.accountURL = '/view_doc.html?mode=collaborator&object_id=' + userTopElem.id
+            return userData
+        }
+        catch (err) {
+            throw new Error('user: ' + err.message)
+        } 
+    } 
+    
+    function users(parameters) {
+        try {
+            var users = []
+            var queryString = "for $elem in collaborators where $elem/is_dismiss!='true' order by $elem/fullname return $elem"
+            var searchText = parameters.searchText;
+            if(searchText !== "") {
+                queryString = "for $elem in collaborators where $elem/is_dismiss!='true' and contains($elem/fullname, '" + searchText + "') order by $elem/fullname return $elem" 
+            }
+            var usersArr = XQuery(queryString)
+            var u
+            var user
+            for (u in usersArr) {
+                if ('' + u.is_dismiss === "false") {
+                    user = {}
+                    user.id = '' + u.id
+                    user.displayName = '' + u.fullname
+                    user.position = '' + u.position_name
+                    user.avatarURL = '/person_icon.html?id=' + u.id + '&type=80x80'
+                    users.push(user)
+                }
+            }
+            var pageSize = parameters.pageSize
+            var startIndex = parameters.page * pageSize
+            var endIndex = startIndex + pageSize
+            if (endIndex > users.length) {
+                endIndex = users.length
+            }
+            var result = {};
+            result.users = ArrayRange(users, startIndex, endIndex);
+            result.totalSize = users.length;
+            return result
+            } catch (err) {
+                throw new Error('users: ' + err.message)
+            }
+        }
+        
+        
+    /////////////////// 
+    // Make response //
+    ///////////////////
+    var parameters = jsonParse(Request.Body)
+    var route = parameters.route
+    var Env = {}
+    initSession()
+    if (!routes[route]) throw new Error('Not supported route')
+    var response = eval('' + route + '(parameters)')
+    response = jsonStringify(response)
+} catch (err) {
+    var errResponse = {}
+    errResponse.code = 500
+    errResponse.message = err.message
+    if(err.message === '401') {
+        errResponse.code = 401
+        errResponse.message = 'Unauthorized'
+    }
+    response = jsonStringify(errResponse)
+}
+%>
+
+<%=response%>

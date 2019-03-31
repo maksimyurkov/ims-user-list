@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>ims-user-list default demo</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: Roboto, sans-serif;
+        color: #424242;
+        font-size: 1rem;
+        padding: 32px 16px;
+        -moz-osx-font-smoothing: grayscale;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      ims-user-list {
+        max-width: 800px;
+        margin: auto;
+      }
+    </style>
+  </head>
+
+  <body>
+    <script src="../dist/vendor/webcomponents-loader.js"></script>
+    <script nomodule src="../dist/vendor/fetch.js"></script>
+    <script nomodule src="../dist/vendor/babel-helpers.min.js"></script>
+    <script nomodule src="../dist/vendor/regenerator-runtime.min.js"></script>
+    <ims-user-list></ims-user-list>
+    <script>
+      document.querySelector("ims-user-list").options = {
+        textAvatar: false,
+        demoMode: true
+      };
+    </script>
+    <script nomodule src="../dist/ims-user-list.es5.js"></script>
+    <script type="module" src="../dist/ims-user-list.js"></script>
+  </body>
+</html>
