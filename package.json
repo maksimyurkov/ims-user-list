@@ -11,7 +11,7 @@
     "dev": "concurrently \"webpack --env development\" \"npm run server\" \"npm run client\"",
     "postinstall": "node utils/generate-helpers.js && npm run build",
     "lint": "eslint ./*.js utils/*.js api/*.js",
-    "demo": "polyserve --open --open-path ./demo/index.html",
+    "demo": "polyserve --open --open-path ./demo/",
     "start": "polyserve",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

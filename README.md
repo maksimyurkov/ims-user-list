@@ -1,6 +1,6 @@
 # User List | \<ims-user-list>
 
-[Demo ↗](https://maksimyurkov.github.io/ims-user-list/demo/index.html)
+[Demo ↗](https://maksimyurkov.github.io/ims-user-list/demo/)
 
 [<img src="screenshot.png" alt="Users list screenshot">](https://vaadin.com/components/vaadin-grid)
 
@@ -28,7 +28,7 @@
 
    * распаковать .zip архив
      * [последний релиз](https://github.com/maksimyurkov/ims-user-list/archive/master.zip)
-     * [все релизы](https://github.com/maksimyurkov/ims-user-list/archive/master.zip)
+     * [все релизы](https://github.com/maksimyurkov/ims-user-list/releases)
 
 2. Разместите HTML код, в **Шаблоне документа** WebTutor:
 
