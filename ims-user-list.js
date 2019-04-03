@@ -74,6 +74,7 @@ class IMSUserList extends LitElement {
       pageSize: 300,
       showAvatar: true,
       textAvatar: true,
+      resizeImage: false,
       voiceInput: true,
       showNoFoundImage: true,
       showFound: true,

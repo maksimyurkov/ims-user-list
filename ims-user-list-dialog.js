@@ -125,6 +125,7 @@ class IMSUserListDialog extends LitElement {
       options.serverURL,
       {
         route: "user",
+        resizeImage: options.resizeImage,
         userId: userId,
         usedData: options.usedData
       },

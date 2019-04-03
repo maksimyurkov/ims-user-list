@@ -5,6 +5,8 @@ import "@polymer/paper-input/paper-input.js";
 import "@polymer/paper-input/paper-textarea.js";
 import "@polymer/paper-toggle-button/paper-toggle-button.js";
 import "@polymer/iron-iconset-svg/iron-iconset-svg.js";
+import "@polymer/iron-icon/iron-icon.js";
+import "@polymer/paper-tooltip/paper-tooltip.js";
 import "@polymer/paper-dropdown-menu/paper-dropdown-menu.js";
 import "@polymer/paper-item/paper-item.js";
 import "@polymer/paper-listbox/paper-listbox.js";
@@ -73,6 +75,17 @@ class IMSUserListGenerator extends LitElement {
           margin: auto;
         }
 
+        .toggle-with-icon {
+          display: flex;
+          align-items: center;
+          position: relative;
+        }
+
+        .toggle-with-icon iron-icon {
+          color: #ffc107;
+          margin: 16px 0 0 8px;
+        }
+
         #spinner-container {
           display: flex;
           height: 150px;
@@ -106,7 +119,8 @@ class IMSUserListGenerator extends LitElement {
             <defs>
                 <g id="close"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></g>
                 <g id="content-copy"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path></g>
-            </defs>
+                <g id="error"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"></path></g>
+              </defs>
         </svg>
     </iron-iconset-svg>
         <div id="container">
@@ -129,6 +143,12 @@ class IMSUserListGenerator extends LitElement {
               <paper-input property-name="pageSize" property-type="number" label="Количество подгружаемых за запрос пользователей"></paper-input>
               <paper-toggle-button property-name="showAvatar">Отображать аватар</paper-toggle-button>
               <paper-toggle-button property-name="textAvatar">Отображать текстовый аватар в списке</paper-toggle-button>
+              <div class="toggle-with-icon">
+                <paper-toggle-button property-name="resizeImage">Изменять размер изображений на стороне сервера</paper-toggle-button>
+                <a href="https://github.com/maksimyurkov/ims-user-list#resizeimage" target="_blank" rel="noopener noreferrer">
+                  <iron-icon icon="ims-user-list-generator:error"></iron-icon> 
+                </a>
+              </div>
               <paper-toggle-button property-name="voiceInput">Голосовой ввод</paper-toggle-button>
               <paper-toggle-button property-name="showNoFoundImage">Отображать изображение "Ничего не найдено"</paper-toggle-button>
               <paper-toggle-button property-name="showFound">Отображать количество найденных пользователей</paper-toggle-button>
@@ -137,7 +157,7 @@ class IMSUserListGenerator extends LitElement {
             </section>
              <section id="used" ?hidden="${activeTab !== "used"}">
               <p>Отображаемые данные пользователей</p>
-              <paper-toggle-button property-name="avatarURL">Ссылка на аватар</paper-toggle-button>
+              <paper-toggle-button property-name="avatarURL">Аватар</paper-toggle-button>
               <paper-toggle-button property-name="displayName">Отображаемое имя</paper-toggle-button>
               <paper-toggle-button property-name="nickname">Никнейм</paper-toggle-button>
               <paper-toggle-button property-name="position">Должность</paper-toggle-button>
@@ -239,6 +259,7 @@ class IMSUserListGenerator extends LitElement {
       pageSize: 300,
       showAvatar: true,
       textAvatar: true,
+      resizeImage: false,
       voiceInput: true,
       showNoFoundImage: true,
       showFound: true,
@@ -333,7 +354,7 @@ class IMSUserListGenerator extends LitElement {
   async getOptionsValues(sectionName) {
     let options = {};
     let elements = this.shadowRoot.querySelectorAll(
-      `section#${sectionName} > *`
+      `section#${sectionName} paper-input, section#${sectionName} paper-toggle-button`
     );
     for (let element of elements) {
       let tagName = element.tagName;

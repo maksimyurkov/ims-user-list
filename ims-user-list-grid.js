@@ -125,6 +125,7 @@ class IMSUserListGrid extends LitElement {
         options.serverURL,
         {
           route: "users",
+          resizeImage: options.resizeImage,
           searchText: searchText || "",
           page: params.page,
           pageSize: params.pageSize

@@ -4,15 +4,13 @@
 
 [<img src="screenshot.png" alt="Users list screenshot">](https://vaadin.com/components/vaadin-grid)
 
-[User List](https://elements.01.ht/item/ims-user-list/2) - элемент предназначенный для отображения списка пользователей системы.
+[User List | \<ims-user-list>](https://elements.01.ht/item/ims-user-list/2) - элемент предназначенный для отображения списка пользователей системы.
 
-Элемент представляет из себя [веб-компоненту](https://developer.mozilla.org/ru/docs/Web/Web_Components), инкапсулирован и может быть размещен в вашей системе без риска затронуть окружение(внешние скрипты и стили).
+Элемент можно использовать по прямому назначению, а также в качестве основы или составляющей для ваших проектов.
 
-На данный момент полностью поддерживается только система [WebTutor](https://webtutor.ru/).
+На данный момент работа поддерживается только в системе [WebTutor](https://webtutor.ru/) (+ пример для Node.js).
 
-Для работы User List в других системах, достаточно по аналогии написать серверную часть, представляющую из себя один небольшой файл (пример в `/api`).
-
-Подробное описание User List доступно по [ссылке](https://elements.01.ht/item/ims-user-list/2).
+Одна из целей создания User List - продемонстрировать для разработчиков один из вариантов создания и размещения модуля для систем в приложении [Elements](https://elements.01.ht).
 
 ## Быстрый старт
 
@@ -20,15 +18,15 @@
 
 ### WebTutor
 
+Пример установки на [видео](https://www.youtube.com/watch?v=s1HkzgbtacY).
+
 1. Разместите [ims-user-list](https://github.com/maksimyurkov/ims-user-list) в директории **/wt/web/node_modules/@maksimyurkov/ims-user-list** вашей системы.
 
    Используйте один из вариантов:
 
-   * [npm](https://www.npmjs.com/) `npm install @maksimyurkov/ims-user-list`
+   * распаковать .zip архив ([последний релиз](https://github.com/maksimyurkov/ims-user-list/archive/master.zip), [все релизы](https://github.com/maksimyurkov/ims-user-list/releases))
 
-   * распаковать .zip архив
-     * [последний релиз](https://github.com/maksimyurkov/ims-user-list/archive/master.zip)
-     * [все релизы](https://github.com/maksimyurkov/ims-user-list/releases)
+   * [npm](https://www.npmjs.com/) `npm install @maksimyurkov/ims-user-list`
 
 2. Разместите HTML код, в **Шаблоне документа** WebTutor:
 
@@ -43,8 +41,6 @@
 <script type="module" src="/node_modules/@maksimyurkov/ims-user-list/dist/ims-user-list.js"></script>
 <!-- END ims-user-list -->
 ```
-
-3. Готово
 
 ## Настройка
 
@@ -140,6 +136,18 @@ Type: `Boolean`
 Default: `true`
 
 Использовать текстовый аватар в списке пользователей.
+
+#### resizeImage
+
+Type: `Boolean`
+
+Default: `false`
+
+Изменять размеры изображений на стороне сервера.
+
+**Внимание!** При включении данной настройки, при первом просмотре списка, WebTutor будет автоматически создавать фото с необходимыми размерами(в директории `/avatars`), что может существенно нагрузить систему. После создания изображений и наличия настроенного кэширования, нагрузка на систему прекратится.
+
+Мы рекомендуем не включать данную настройку, а обработать один раз все имеющиеся аватары (изменить размеры и сжать) используя стороннюю библиотеку и в дальнейшем уже сохранять на сервере аватары необходимых размеров.
 
 #### voiceInput
 
@@ -328,6 +336,26 @@ Default: `true`
 * **--ims-user-list-dialog-background**: #ffffff,
 * **--ims-user-list-dialog-user-info-tooltip-background**: #616161,
 * **--ims-user-list-dialog-user-info-tooltip-text-color**: #ffffff
+
+## Поддержка
+
+Если вы столкнетесь с проблемой установки, настройки, ошибкой или багом, то попробуйте найти решение вашей проблемы в [документации](https://github.com/maksimyurkov/ims-user-list) и в [issues](https://github.com/maksimyurkov/ims-user-list/issues). Если ничего из указанного вам не поможет, то создайте новую тему в [issues](https://github.com/maksimyurkov/ims-user-list/issues).
+
+Если у вас есть какие-то пожелания в реализации дополнительного функционала для User List или рекомендации по совершенствованию существующего, то можете оставлять их в [issues](https://github.com/maksimyurkov/ims-user-list/issues).
+
+Мы будем рады, если вы поможете улучшить элемент, процесс установки или документацию.
+
+### Поддержка элемента включает:
+
+* Наличие разработчика для ответа на вопросы
+* Ответы на технические вопросы об особенностях элемента
+* Помощь в решении ошибок и проблем
+
+### Поддержка элемента не включает:
+
+* Услуги по настройке
+* Услуги по установке
+* Исправление ошибок и проблем на стороне сторонних библиотек и систем
 
 ## Разработка
 

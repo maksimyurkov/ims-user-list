@@ -153,7 +153,7 @@ class IMSUserListDialogUserInfo extends LitElement {
             ${
               options.showAvatar
                 ? html`${
-                    data.avatarURL === undefined
+                    data.avatarURL === undefined || data.avatarURL === ""
                       ? html`<paper-avatar class="avatar" label="${
                           data.displayName
                         }"></paper-avatar>`

@@ -16,14 +16,32 @@ function jsonStringify(obj) {
     }
 }
 
+function getAvatarURL(user, resizeImage, avatarPriority, size) {
+    var avatarURL = ''
+    if (resizeImage) {
+        avatarURL = '/person_icon.html?id=' + user.id + '&type=' + size
+    } else {
+        if (avatarPriority === "photo") {
+            avatarURL = '' + user.pict_url
+        }
+        if (avatarPriority === "avatar") {
+            var userTopElem = OpenDoc(UrlFromDocID(Int(user.id))).TopElem
+            if (userTopElem.ChildExists("personal_config") && userTopElem.personal_config.ChildExists("avatar_filename") && userTopElem.personal_config.avatar_filename.HasValue) {
+                avatarURL = '/avatars/' + userTopElem.personal_config.avatar_filename
+            }
+        }
+    }
+    return avatarURL
+}
+
 try {
     var routes = { 'user': true, 'users': true }
 
     if(Request.Header.HasProperty("Origin")) {
         Request.AddRespHeader("Access-Control-Allow-Origin", Request.Header.Origin, false)
-    }  else {
+    } else {
         Request.AddRespHeader("Access-Control-Allow-Origin", "*", false)
-    }   
+    }
     Request.AddRespHeader("Access-Control-Allow-Credentials", true)
     Request.AddRespHeader("Access-Control-Allow-Headers", "Content-Type, Accept")
     Request.AddRespHeader("Access-Control-Allow-Methods", "POST")
@@ -39,10 +57,11 @@ try {
         try {
             var userId = parameters.userId
             var usedData = parameters.usedData
+            var avatarPriority = global_settings.settings.social_avatar_priority.Value;
             var userData = {}
             var userTopElem = OpenDoc(UrlFromDocID(Int(userId))).TopElem
             userData.id = '' + userTopElem.id
-            if (usedData.avatarURL) userData.avatarURL = '' + userTopElem.pict_url
+            if (usedData.avatarURL) userData.avatarURL = getAvatarURL(userTopElem, parameters.resizeImage, avatarPriority, "256x256")
             if (usedData.displayName) userData.displayName = '' + userTopElem.lastname + ' ' + userTopElem.firstname + ' ' + userTopElem.middlename
             if (usedData.nickname) userData.nickname = '' + userTopElem.personal_config.nick
             if (usedData.position) userData.position = '' + userTopElem.position_name
@@ -71,13 +90,14 @@ try {
             var usersArr = XQuery(queryString)
             var u
             var user
+            var avatarPriority = global_settings.settings.social_avatar_priority.Value;
             for (u in usersArr) {
                 if ('' + u.is_dismiss === "false") {
                     user = {}
                     user.id = '' + u.id
                     user.displayName = '' + u.fullname
                     user.position = '' + u.position_name
-                    user.avatarURL = '/person_icon.html?id=' + u.id + '&type=80x80'
+                    user.avatarURL = getAvatarURL(u, parameters.resizeImage, avatarPriority, "80x80")
                     users.push(user)
                 }
             }
@@ -91,10 +111,10 @@ try {
             result.users = ArrayRange(users, startIndex, endIndex);
             result.totalSize = users.length;
             return result
-            } catch (err) {
-                throw new Error('users: ' + err.message)
-            }
+        } catch (err) {
+            throw new Error('users: ' + err.message)
         }
+    }
         
         
     /////////////////// 
