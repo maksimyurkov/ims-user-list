@@ -1,14 +1,16 @@
 {
   "name": "@maksimyurkov/ims-user-list",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "User List web component for WebTutor and other LMS",
   "main": "ims-user-list.js",
   "module": "ims-user-list.js",
   "scripts": {
     "build": "webpack --env production",
     "server": "cd api && nodemon nodejs-dev-server.js",
-    "client": "polyserve --module-resolution=node --open --open-path ./demo/development.html",
-    "dev": "concurrently \"webpack --env development\" \"npm run server\" \"npm run client\"",
+    "client":
+      "polyserve --module-resolution=node --open --open-path ./demo/development.html",
+    "dev":
+      "concurrently \"webpack --env development\" \"npm run server\" \"npm run client\"",
     "postinstall": "node utils/generate-helpers.js && npm run build",
     "lint": "eslint ./*.js utils/*.js api/*.js",
     "demo": "polyserve --open --open-path ./demo/",
@@ -19,24 +21,20 @@
     "type": "git",
     "url": "git+https://github.com/maksimyurkov/ims-user-list.git"
   },
-  "keywords": [
-    "module",
-    "plugin",
-    "lms",
-    "web component",
-    "webtutor"
-  ],
+  "keywords": ["module", "plugin", "lms", "web component", "webtutor"],
   "author": "maksimyurkov",
   "license": "Elements Personal Free License (EPFL)",
   "bugs": {
     "url": "https://github.com/maksimyurkov/ims-user-list/issues"
   },
-  "homepage": "https://github.com/maksimyurkov/ims-user-list/blob/master/README.md",
+  "homepage":
+    "https://github.com/maksimyurkov/ims-user-list/blob/master/README.md",
   "devDependencies": {
     "@babel/core": "^7.3.4",
     "@babel/plugin-external-helpers": "^7.2.0",
     "@babel/preset-env": "^7.3.4",
-    "@lrnwebcomponents/paper-avatar": "maksimyurkov/paper-avatar#6327b121f168c973a2ee10f8f0e7dc86e2d0bb16",
+    "@lrnwebcomponents/paper-avatar":
+      "maksimyurkov/paper-avatar#6327b121f168c973a2ee10f8f0e7dc86e2d0bb16",
     "@polymer/iron-icon": "^3.0.1",
     "@polymer/iron-iconset-svg": "^3.0.1",
     "@polymer/paper-dialog": "^3.0.1",
