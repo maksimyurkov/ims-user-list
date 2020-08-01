@@ -1,6 +1,6 @@
 {
   "name": "@maksimyurkov/ims-user-list",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "User List web component for WebTutor and other LMS",
   "scripts": {
     "build": "node utils/generate-helpers.js && webpack --env production",
