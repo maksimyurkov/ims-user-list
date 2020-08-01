@@ -18,17 +18,17 @@
 
 ### WebTutor
 
-Пример установки на [видео](https://www.youtube.com/watch?v=s1HkzgbtacY).
+1. На сервере WebTutor установите [Node.js](https://nodejs.org/en/download/)
 
-1. Разместите [ims-user-list](https://github.com/maksimyurkov/ims-user-list) в директории **/wt/web/node_modules/@maksimyurkov/ims-user-list** вашей системы.
+2. В командной строке введите (директория может отличаться):
 
-   Используйте один из вариантов:
+```sh
+cd C:\Program Files\WebSoft\WebTutorServer\wt\web
+npm init -y
+npm install @maksimyurkov/ims-user-list
+```
 
-   * распаковать .zip архив ([последний релиз](https://github.com/maksimyurkov/ims-user-list/archive/master.zip), [все релизы](https://github.com/maksimyurkov/ims-user-list/releases))
-
-   * [npm](https://www.npmjs.com/) `npm install @maksimyurkov/ims-user-list`
-
-2. Разместите HTML код, в **Шаблоне документа** WebTutor:
+3. Разместите HTML код, в **Шаблоне документа** WebTutor:
 
 ```html
 <!-- START ims-user-list -->
@@ -48,7 +48,7 @@
 
 Для настройки ims-user-list перейдите по ссылке в вашей системе:
 
-`https://адрес.вашей.системы/node_modules/@maksimyurkov/ims-user-list/demo/generator.html`
+`https://<ваш домен>/node_modules/@maksimyurkov/ims-user-list/demo/generator.html`
 
 ### Options
 
@@ -380,8 +380,6 @@ npm run demo
 ```
 
 ## Совместимость
-
-Последние версии:
 
 * Chrome
 * Firefox
