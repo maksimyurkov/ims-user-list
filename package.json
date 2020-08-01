@@ -1,6 +1,6 @@
 {
   "name": "@maksimyurkov/ims-user-list",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "User List web component for WebTutor and other LMS",
   "main": "ims-user-list.js",
   "module": "ims-user-list.js",
